@@ -23,7 +23,23 @@ public class S3Config {
 
     @Bean
     public AmazonS3 amazonS3Client(){
+        // accessKey, secretKey를 Credentials에 저장
+
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKey, secretKey);
+
+        /*  해당 BasicAWSCredenitals의 AllArgumentConstructor :
+            public BasicAWSCredentials(String accessKey, String secretKey) {
+            if (accessKey == null) {
+                throw new IllegalArgumentException("Access key cannot be null.");
+            }
+            if (secretKey == null) {
+                throw new IllegalArgumentException("Secret key cannot be null.");
+            }
+
+            this.accessKey = accessKey;
+            this.secretKey = secretKey;
+        }*/
+
         return AmazonS3ClientBuilder.standard()
                 .withRegion(region)
                 .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))

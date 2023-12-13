@@ -9,3 +9,8 @@ cloud:
     credentials:
       accessKey: ${your_accessKey}
       secretKey: ${your_secretKey}
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 2MB

@@ -2,6 +2,7 @@ package com.pjh.s3imageupload.Controller;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -41,9 +42,11 @@ public class S3FileUploadController {
             metaData.setContentType(file.getContentType());
             metaData.setContentLength(file.getSize());
             amazonS3.putObject(bucket, uuidFileName, file.getInputStream(), metaData);
-            return ResponseEntity.ok(url);
+
+            return new ResponseEntity<>("msg : 파일 업로드 성공", HttpStatus.OK);
         }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            e.printStackTrace();
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
